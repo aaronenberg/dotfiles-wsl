@@ -117,3 +117,73 @@ if ! shopt -oq posix; then
 fi
 
 stty -ixon
+
+command_not_found_handle()
+{
+    cmd=$1
+    shift
+    args=( "$@" )
+
+    saveIFS="$IFS"
+    IFS=:
+    for dir in $PATH; do
+       for executable in "$dir/$cmd.exe" "$dir/$cmd.com" "$dir/$cmd.bat"; do
+          if [ -x $executable ]; then
+             IFS="$saveIFS"
+             "$executable" "${args[@]}"
+             return
+          fi
+       done
+    done
+
+    IFS="$saveIFS"
+    if [ -x /usr/lib/command-not-found ]; then
+       /usr/lib/command-not-found -- "$cmd" "${args[@]}"
+       return $?
+    elif [ -x /usr/share/command-not-found/command-not-found ]; then
+       /usr/share/command-not-found/command-not-found -- "$1" "${args[@]}"
+       return $?
+    else
+        printf "%s: command not found\n" "$cmd" >&2 return 127
+    fi
+}
+
+ocr()
+{
+    cd "$oc"
+    nuget restore ./OneCert.sln
+    cd -
+}
+
+ocb()
+{
+    cd "$oc"
+    msbuild ./OneCert.sln
+    cd -
+}
+
+ocrb()
+{
+    cd "$oc"
+
+    any_untracked
+    if [ $? -eq 0 ]; then
+        echo "there are untracked files that need to be stashed or tracked"
+        return 1
+    fi
+
+    tskill vbcscompiler 2>&1 > /dev/null
+
+    git clean -xdf
+
+    nuget restore ./OneCert.sln
+    msbuild ./OneCert.sln
+
+    cd - 2>&1 > /dev/null
+}
+
+any_untracked()
+{
+    num_untracked=`git ls-files --other --directory --exclude-standard --no-empty-directory | sed q1 | wc -l`
+    [[ $num_untracked -eq 0 ]] && return 1 || return 0;
+}
