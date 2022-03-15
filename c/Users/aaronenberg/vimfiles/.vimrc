@@ -41,7 +41,7 @@ au BufNewFile * startinsert
 
 " THEME 
 syntax enable
-colorscheme oceanicnext
+colorscheme OceanicNext
 set encoding=utf-8
 highlight clear LineNr
 hi LineNr guifg=grey
