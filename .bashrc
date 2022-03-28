@@ -144,28 +144,22 @@ command_not_found_handle()
        /usr/share/command-not-found/command-not-found -- "$1" "${args[@]}"
        return $?
     else
-        printf "%s: command not found\n" "$cmd" >&2 return 127
+        printf "%s: command not found\n" "$cmd" >&2
+        return 127
     fi
 }
 
-ocr()
+# Clean OneCert solution
+occ()
 {
-    cd "$oc"
-    nuget restore ./OneCert.sln
-    cd -
+    cd $oc
+    nc SharedConfiguration/appsettings.dev.json
+    cd - 2>&1 > /dev/null
 }
 
-ocb()
+# Clean a .NET solution
+nc()
 {
-    cd "$oc"
-    msbuild ./OneCert.sln
-    cd -
-}
-
-ocrb()
-{
-    cd "$oc"
-
     any_untracked
     if [ $? -eq 0 ]; then
         echo "there are untracked files that need to be stashed or tracked"
@@ -173,15 +167,80 @@ ocrb()
     fi
 
     tskill vbcscompiler 2>&1 > /dev/null
+    tskill devenv 2>&1 > /dev/null
+    tskill msbuild 2>&1 > /dev/null
 
-    git clean -xdf
+    if [ -z "$1" ]; then
+        git clean -xdf
+    else
+        git clean -xdf -e "$1"
+    fi
+}
 
-    nuget restore ./OneCert.sln
-    msbuild ./OneCert.sln
+# Restore a .NET solution or project
+nr()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: SOLUTION"
+        return 1;
+    fi
+
+    cd "$(dirname "$(realpath "$1")")"
+    nuget restore "$(basename $1)"
+    cd - 2>&1 > /dev/null
+}
+
+# Build a .NET Solution
+nb()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: SOLUTION"
+        return 1;
+    fi
+
+    cd "$(dirname "$(realpath "$1")")"
+    msbuild "$(basename $1)"
+    cd - 2>&1 > /dev/null
+}
+
+# Rebuild OneCert Solution
+ocrb()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: SOLUTION"
+        return 1;
+    fi
+
+    nrb "$1" SharedConfiguration/appsettings.dev.json
+}
+
+# Rebuild a .NET Solution
+nrb()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: SOLUTION"
+        return 1;
+    fi
+ 
+    cd "$(dirname "$(realpath "$1")")"
+
+    nc "$2"
+    [ $? -ne 0 ] && return 1
+
+    nuget restore "$(basename $1)"
+    tasklist /fi "IMAGENAME eq devenv.exe" | grep devenv
+    [ $? -ne 0 ] && nohup devenv.exe /nosplash "$(basename $1)" &
+    msbuild "$(basename $1)"
 
     cd - 2>&1 > /dev/null
 }
 
+restartoc()
+{
+    appcmd recycle apppool /apppool.name:"onecert-dev"
+}
+
+# Check a git repo for any untracked files
 any_untracked()
 {
     num_untracked=`git ls-files --other --directory --exclude-standard --no-empty-directory | sed q1 | wc -l`
