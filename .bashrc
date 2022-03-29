@@ -229,7 +229,7 @@ nrb()
 
     nuget restore "$(basename $1)"
     tasklist /fi "IMAGENAME eq devenv.exe" | grep devenv
-    [ $? -ne 0 ] && nohup devenv.exe /nosplash "$(basename $1)" &
+    [ $? -ne 0 ] && nohup devenv.exe /nosplash "$(basename $1)" >/dev/null 2>&1 &
     msbuild "$(basename $1)"
 
     cd - 2>&1 > /dev/null
