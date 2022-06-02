@@ -15,25 +15,24 @@ git branch --set-upstream-to origin/master
 ```
 
 ```bash
+# These settings will be done by installing the repo locally, but leaving here for reference
 git config --global credential.helper "$(wslpath "$(cmd.exe /c echo %LocalAppData%\\Programs\\Git Credential Manager\\git-credential-manager-core.exe 2>/dev/null)" | sed -e 's/\r//g' -e 's/ /\\ /g')"
 echo 'export GIT_EXEC_PATH="$(git --exec-path)"' >> ~/.bashrc
 echo 'export WSLENV=$WSLENV:GIT_EXEC_PATH/wp' >> ~/.bashrc
 ```
 
 - Copy files to Windows filesystem
-```
-mkdir $wh/vimfiles
-cp .vim/.vimrc $wh/vimfiles
-```
 
 - Update submodules
-```
+```bash
 git submodule update --init --recursive
 ```
 
-- install Windows Terminal
+- Install Windows Terminal (installed by default on Windows 11)
 
-    - In Windows Terminal settings.json comment out the bindings for ctrl-v, ctrl-c. They conflict with vim bindings.
+    - terminal settings.json will have been updated after copying files to Windows filesystem
+    - These steps are already done after copying settings files to windows. For reference:
+        - In Windows Terminal settings.json comment out the bindings for ctrl-v, ctrl-c. They conflict with vim bindings.
 
 - If you get an error like:
     error: chmod on .git/config.lock failed: Operation not permitted
