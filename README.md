@@ -50,7 +50,7 @@ X11 window behavior
     - Open Control panel => ease of access => Change how the mouse works => activate a window by hovering over it
 
 - Disable raise window on focus:
-    - Open registry, go to `hkcu\control panel\desktop\UserPreferencesMask`, subtract 40 from first hex value
+    - Open registry, go to `hkcu\control panel\desktop\UserPreferencesMask`, subtract 0x40 from first hex value
     
 - make focus on hover faster:
     - open registry, go to `hkcu\control panel\desktop\ActiveWndTrkTimeout`, set it to 150.
