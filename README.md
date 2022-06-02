@@ -11,6 +11,7 @@ git remote add origin https://github.com/aaronenberg/dotfiles-wsl.git
 git fetch
 git reset origin/master # Required when the versioned files existed in path before "git init" of this repo.
 git reset --hard HEAD
+git branch --set-upstream-to origin/master
 ```
 
 ```bash
