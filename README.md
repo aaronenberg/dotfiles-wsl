@@ -1,8 +1,17 @@
-WSL 2 development environment setup
+WSL development environment setup
 
-- install WSL
+- Install WSL
 
-- install git with [git credential manager (standalone)](https://github.com/GitCredentialManager/git-credential-manager/releases/latest):
+- Install git with [git credential manager (standalone)](https://github.com/GitCredentialManager/git-credential-manager/releases/latest):
+
+- Clone this repo to the user's home directory
+```bash
+git init
+git remote add origin https://github.com/aaronenberg/dotfiles-wsl.git
+git fetch
+git reset origin/master # Required when the versioned files existed in path before "git init" of this repo.
+git reset --hard HEAD
+```
 
 ```bash
 git config --global credential.helper "$(wslpath "$(cmd.exe /c echo %LocalAppData%\\Programs\\Git Credential Manager\\git-credential-manager-core.exe 2>/dev/null)" | sed -e 's/\r//g' -e 's/ /\\ /g')"
