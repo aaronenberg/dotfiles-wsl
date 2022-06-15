@@ -175,6 +175,13 @@ nc()
     else
         git clean -xdf -e "$1"
     fi
+
+# uncomment after testing when clean fails
+# if clean fails with message "failed to remove"
+# terminate w3wp.exe
+# pid=$(tasklist /FI "IMAGENAME eq w3wp.exe" | tail -n1 | awk '{ print $2 }')
+# echo $pid | grep -E '[0-9]{3,}'
+# [ $? -eq 0 ] && tskill $pid
 }
 
 # Restore a .NET solution or project
@@ -200,6 +207,44 @@ nb()
 
     cd "$(dirname "$(realpath "$1")")"
     msbuild "$(basename $1)"
+    cd - 2>&1 > /dev/null
+}
+
+tsrestore()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: PATH_TO_REPO"
+        return 1;
+    fi
+
+    nr "$1"/src/build/msbuild/packages.config
+}
+
+tsrb()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: PATH_TO_REPO"
+        return 1;
+    fi
+
+    cd $(realpath "$1")
+    nc && \
+    tsrestore "$1" && \
+    tsb "$1"
+    cd - 2>&1 > /dev/null
+}
+
+tsb()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: PATH_TO_REPO"
+        return 1;
+    fi
+
+    cd $(realpath "$1")
+    msbuild -t:slngen -p:"SlnGenLaunchVisualStudio=false" -p:"Platform=x64" && \
+    # build is failing when run in bash
+    powershell -command 'msbuild -p:"Platform=x64"'
     cd - 2>&1 > /dev/null
 }
 
@@ -245,4 +290,41 @@ any_untracked()
 {
     num_untracked=`git ls-files --other --directory --exclude-standard --no-empty-directory | sed q1 | wc -l`
     [[ $num_untracked -eq 0 ]] && return 1 || return 0;
+}
+
+tsstart()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: PATH_TO_REPO"
+        return 1;
+    fi
+
+    if [ -z "$2" ]; then
+        echo "Argument empty: build type: debug|retail"
+        return 1;
+    fi
+
+    cd $(realpath "$1")/out/$2-amd64/TriggerService
+    cmd.exe /C startdev.bat &
+    cd - 2>&1 > /dev/null
+}
+
+gcm()
+{
+    git checkout master
+}
+
+gcb()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: BRANCH_NAME"
+        return 1;
+    fi
+
+    git checkout -b "$1"
+}
+
+gp()
+{
+    git pull -p
 }

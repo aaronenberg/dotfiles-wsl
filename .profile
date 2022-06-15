@@ -29,7 +29,8 @@ fi
 test -f ~/.git-completion.bash && . $_ 
 
 export wh="/mnt/c/Users/aaronenberg"
-export oc="/mnt/c/Users/aaronenberg/projects/OneCert"
+export oc="$wh/projects/OneCert"
+export ts="$wh/projects/Secrets-SDP-TriggerService"
 
 export MYVIMRC="$wh/vimfiles/.vimrc"
 export VIMINIT="source $MYVIMRC"
