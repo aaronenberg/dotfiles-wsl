@@ -1,3 +1,9 @@
 *.swp
 .bash_history
 .viminfo
+.vim/.netrwhist
+.aws
+.azure
+.docker
+temp
+notes

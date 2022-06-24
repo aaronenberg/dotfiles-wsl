@@ -31,6 +31,7 @@ test -f ~/.git-completion.bash && . $_
 export wh="/mnt/c/Users/aaronenberg"
 export oc="$wh/projects/OneCert"
 export ts="$wh/projects/Secrets-SDP-TriggerService"
+export tss="$ts/src/service/PilotFish/TriggerService/TriggerService.Synthetics"
 
 export MYVIMRC="$wh/vimfiles/.vimrc"
 export VIMINIT="source $MYVIMRC"

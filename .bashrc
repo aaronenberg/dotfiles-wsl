@@ -242,7 +242,7 @@ tsb()
     fi
 
     cd $(realpath "$1")
-    msbuild -t:slngen -p:"SlnGenLaunchVisualStudio=false" -p:"Platform=x64" && \
+    powershell -command 'msbuild -t:slngen -p:"SlnGenLaunchVisualStudio=false" -p:"Platform=x64"' && \
     # build is failing when run in bash
     powershell -command 'msbuild -p:"Platform=x64"'
     cd - 2>&1 > /dev/null
@@ -311,7 +311,29 @@ tsstart()
 
 gcm()
 {
-    git checkout master
+    gc master || gc main
+}
+
+gc()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: BRANCH_NAME"
+        return 1;
+    fi
+
+    git branch | grep -E "^\*\s$1$"
+    if [ $? -eq 0 ]; then
+        echo "already on branch $1"
+        return 0;
+    fi
+
+    git branch | grep -E "^\s\s$1$"
+    if [ $? -ne 0 ]; then
+        echo "$1 is not an existing branch"
+        return 1;
+    fi
+
+    git checkout "$1"
 }
 
 gcb()
