@@ -152,9 +152,10 @@ command_not_found_handle()
 # Clean OneCert solution
 occ()
 {
+    pushd .
     cd $oc
     nc SharedConfiguration/appsettings.dev.json
-    cd - 2>&1 > /dev/null
+    popd
 }
 
 # Clean a .NET solution
@@ -192,9 +193,10 @@ nr()
         return 1;
     fi
 
+    pushd .
     cd "$(dirname "$(realpath "$1")")"
     nuget restore "$(basename $1)"
-    cd - 2>&1 > /dev/null
+    popd
 }
 
 # Build a .NET Solution
@@ -205,19 +207,10 @@ nb()
         return 1;
     fi
 
+    pushd .
     cd "$(dirname "$(realpath "$1")")"
     msbuild "$(basename $1)"
-    cd - 2>&1 > /dev/null
-}
-
-tsrestore()
-{
-    if [ -z "$1" ]; then
-        echo "Argument empty: PATH_TO_REPO"
-        return 1;
-    fi
-
-    nr "$1"/src/build/msbuild/packages.config
+    popd
 }
 
 tsrb()
@@ -227,11 +220,11 @@ tsrb()
         return 1;
     fi
 
+    pushd .
     cd $(realpath "$1")
     nc && \
-    tsrestore "$1" && \
     tsb "$1"
-    cd - 2>&1 > /dev/null
+    popd
 }
 
 tsb()
@@ -241,11 +234,12 @@ tsb()
         return 1;
     fi
 
+    pushd .
     cd $(realpath "$1")
     powershell -command 'msbuild -t:slngen -p:"SlnGenLaunchVisualStudio=false" -p:"Platform=x64"' && \
     # build is failing when run in bash
     powershell -command 'msbuild -p:"Platform=x64"'
-    cd - 2>&1 > /dev/null
+    popd
 }
 
 # Rebuild OneCert Solution
@@ -267,6 +261,7 @@ nrb()
         return 1;
     fi
  
+    pushd .
     cd "$(dirname "$(realpath "$1")")"
 
     nc "$2"
@@ -276,8 +271,7 @@ nrb()
     tasklist /fi "IMAGENAME eq devenv.exe" | grep devenv
     [ $? -ne 0 ] && nohup devenv.exe /nosplash "$(basename $1)" >/dev/null 2>&1 &
     msbuild "$(basename $1)"
-
-    cd - 2>&1 > /dev/null
+    popd
 }
 
 restartoc()
@@ -304,9 +298,10 @@ tsstart()
         return 1;
     fi
 
+    pushd .
     cd $(realpath "$1")/out/$2-amd64/TriggerService
     cmd.exe /C startdev.bat &
-    cd - 2>&1 > /dev/null
+    popd
 }
 
 gcm()
@@ -349,4 +344,14 @@ gcb()
 gp()
 {
     git pull -p
+}
+
+pushd()
+{
+    command pushd "$@" > /dev/null
+}
+
+popd()
+{
+    command popd "$@" > /dev/null
 }
