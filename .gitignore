@@ -1,0 +1,11 @@
+.secrets
+*.swp
+.bash_history
+.viminfo
+.lesshst
+.vim/.netrwhist
+.aws
+.azure
+.docker
+temp
+notes

@@ -1,0 +1,13 @@
+[credential]
+	helper = /mnt/c/Users/aaronenberg/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager-core.exe
+	useHttpPath = true
+[user]
+	email = aaronenberg@microsoft.com
+	name = Aaron Enberg
+[core]
+	editor = vim
+	fileMode = false
+	autocrlf = input
+	trustctime = false
+[pull]
+	rebase = false
