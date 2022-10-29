@@ -9,9 +9,9 @@ WSL development environment setup
 git init
 git remote add origin https://github.com/aaronenberg/dotfiles-wsl.git
 git fetch
-git reset origin/master # Required when the versioned files existed in path before "git init" of this repo.
+git reset origin/main # Required when the versioned files existed in path before "git init" of this repo.
 git reset --hard HEAD
-git branch --set-upstream-to origin/master
+git branch --set-upstream-to origin/main
 ```
 
 ```bash
@@ -27,12 +27,6 @@ echo 'export WSLENV=$WSLENV:GIT_EXEC_PATH/wp' >> ~/.bashrc
 ```bash
 git submodule update --init --recursive
 ```
-
-- Install Windows Terminal (installed by default on Windows 11)
-
-    - terminal settings.json will have been updated after copying files to Windows filesystem
-    - These steps are already done after copying settings files to windows. For reference:
-        - In Windows Terminal settings.json comment out the bindings for ctrl-v, ctrl-c. They conflict with vim bindings.
 
 - If you get an error like:
     error: chmod on .git/config.lock failed: Operation not permitted
