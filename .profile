@@ -46,3 +46,4 @@ export VIMINIT="source $MYVIMRC"
 
 export GIT_EXEC_PATH="$(git --exec-path)"
 export WSLENV=$WSLENV:GIT_EXEC_PATH/wp
+. "$HOME/.cargo/env"

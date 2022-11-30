@@ -365,3 +365,23 @@ popd()
 {
     command popd "$@" > /dev/null
 }
+
+adduntracked()
+{
+    echo -e "a\n*\nq\n" | git add -i
+}
+
+dcattach()
+{
+    local container_id=$(docker container ls | grep -i $(basename $(pwd)) | awk '{ print $1 }')
+
+    if [ -z "$container_id" ]; then
+        echo "no dev container running with name containing $(basename $(pwd))"
+        return 1;
+    fi
+
+    command docker exec -it -u vscode -w "/workspaces/$(basename $(pwd))" $container_id bash
+}
+
+
+. "$HOME/.cargo/env"
