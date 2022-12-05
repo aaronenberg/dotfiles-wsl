@@ -7,6 +7,11 @@
 .aws
 .azure
 .docker
+.cargo
+.rustup
+.msrustup
+.vscode-remote-containers
+.vscode-server
 temp
 notes
 /projects

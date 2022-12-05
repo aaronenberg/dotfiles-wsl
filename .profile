@@ -30,7 +30,7 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-PATH="/mnt/c/Windows/System32/inetsrv:/mnt/c/Users/aaronenberg/workspace/tools:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE:$PATH"
+PATH="/mnt/c/Windows/System32/inetsrv:/mnt/c/Users/aaronenberg/workspace/tools:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE:~/.msrustup/bin:$PATH"
 
 test -f ~/.git-completion.bash && . $_ 
 
@@ -47,3 +47,9 @@ export VIMINIT="source $MYVIMRC"
 export GIT_EXEC_PATH="$(git --exec-path)"
 export WSLENV=$WSLENV:GIT_EXEC_PATH/wp
 . "$HOME/.cargo/env"
+
+# rust cross-compile ARM64
+export CXX_aarch64_unknown_linux_gnu=aarch64-linux-gnu-g++
+export CC_aarch64_unknown_linux_gnu=aarch64-linux-gnu-gcc
+export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc
+
