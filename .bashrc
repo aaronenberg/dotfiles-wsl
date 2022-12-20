@@ -380,7 +380,14 @@ dcattach()
         return 1;
     fi
 
-    command docker exec -it -u vscode -w "/workspaces/$(basename $(pwd))" $container_id bash
+    # attach to the container and set REMOTE_CONTAINERS_IPC for git auth
+    command docker exec -it -u vscode -w "/workspaces/$(basename $(pwd))" $container_id /usr/bin/env bash -c '
+        export REMOTE_CONTAINERS_IPC=$(
+            find /tmp -name '\''vscode-remote-containers-ipc*'\'' -type s -printf "%T@ %p\n" 2>/dev/null \
+            | sort -n \
+            | cut -d " " -f 2- \
+            | tail -n 1)
+        $SHELL'
 }
 
 
