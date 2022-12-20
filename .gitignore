@@ -12,6 +12,9 @@
 .msrustup
 .vscode-remote-containers
 .vscode-server
+.cache
+.azure-devops
+.ssh
 temp
 notes
 /projects
