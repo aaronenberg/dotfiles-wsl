@@ -1,3 +1,6 @@
+.reportbugrc
+.rpmdb/
+.selected_editor
 .secrets
 *.swp
 .bash_history

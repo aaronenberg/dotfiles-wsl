@@ -19,6 +19,7 @@ set nolist
 set numberwidth=1
 set textwidth=80
 set fo-=t
+set nojoinspaces
 
 
 let mapleader=","

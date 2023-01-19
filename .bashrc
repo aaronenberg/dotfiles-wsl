@@ -371,9 +371,23 @@ adduntracked()
     echo -e "a\n*\nq\n" | git add -i
 }
 
+glfmt()
+{
+    git log --format=format:%B
+}
+
+dc()
+{
+    if [[ "$1" == "attach" ]]; then
+        dcattach
+    else
+        command devcontainer "$@"
+    fi
+}
+
 dcattach()
 {
-    local container_id=$(docker container ls | grep -i $(basename $(pwd)) | awk '{ print $1 }')
+    local container_id=$(docker container ls --no-trunc | grep -i "container started" | grep -i $(basename $(pwd)) | awk '{ print $1 }')
 
     if [ -z "$container_id" ]; then
         echo "no dev container running with name containing $(basename $(pwd))"
@@ -381,7 +395,12 @@ dcattach()
     fi
 
     # attach to the container and set REMOTE_CONTAINERS_IPC for git auth
-    command docker exec -it -u vscode -w "/workspaces/$(basename $(pwd))" $container_id /usr/bin/env bash -c '
+    command docker exec -it \
+        -e COLUMNS="`tput cols`" \
+        -e LINES="`tput lines`" \
+        -u vscode \
+        -w "/workspace" \
+        $container_id /usr/bin/env bash -c '
         export REMOTE_CONTAINERS_IPC=$(
             find /tmp -name '\''vscode-remote-containers-ipc*'\'' -type s -printf "%T@ %p\n" 2>/dev/null \
             | sort -n \
@@ -389,6 +408,5 @@ dcattach()
             | tail -n 1)
         $SHELL'
 }
-
 
 . "$HOME/.cargo/env"

@@ -30,7 +30,7 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-PATH="/mnt/c/Windows/System32/inetsrv:/mnt/c/Users/aaronenberg/workspace/tools:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE:~/.msrustup/bin:$PATH"
+PATH="/mnt/c/Windows/System32/inetsrv:/mnt/c/Users/aaronenberg/workspace/tools:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE:${HOME}/.msrustup/bin:$PATH"
 
 test -f ~/.git-completion.bash && . $_ 
 
@@ -44,7 +44,7 @@ export tss="$ts/src/service/PilotFish/TriggerService/TriggerService.Synthetics"
 export MYVIMRC="$wh/vimfiles/.vimrc"
 export VIMINIT="source $MYVIMRC"
 
-export GIT_EXEC_PATH="$(git --exec-path)"
+#export GIT_EXEC_PATH="$(git --exec-path)"
 export WSLENV=$WSLENV:GIT_EXEC_PATH/wp
 . "$HOME/.cargo/env"
 
