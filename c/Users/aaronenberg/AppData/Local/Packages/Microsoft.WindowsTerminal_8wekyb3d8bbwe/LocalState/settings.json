@@ -1,35 +1,15 @@
 {
+    "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
     "actions": 
     [
-        {
-            "command": 
-            {
-                "action": "newTab",
-                "index": 8
-            },
-            "keys": "alt+shift+9"
-        },
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "up"
-            },
-            "keys": "alt+k"
-        },
         {
             "command": "find",
             "keys": "ctrl+shift+f"
         },
         {
-            "command": 
-            {
-                "action": "newTab",
-                "index": 1,
-                "profile": "Debian"
-            },
-            "keys": "alt+shift+2"
+            "command": "closePane",
+            "keys": "ctrl+w"
         },
         {
             "command": 
@@ -41,72 +21,124 @@
             "keys": "alt+enter"
         },
         {
-            "command": "closePane",
-            "keys": "ctrl+w"
-        },
-        {
-            "command": 
+            "command":
             {
-                "action": "newTab",
-                "index": 2
+                "action": "swapPane",
+                "direction": "up"
             },
-            "keys": "alt+shift+3"
+            "keys": "alt+shift+k"
         },
         {
-            "command": 
+            "command":
             {
-                "action": "newTab",
+                "action": "swapPane",
+                "direction": "down"
+            },
+            "keys": "alt+shift+j"
+        },
+        {
+            "command":
+            {
+                "action": "swapPane",
+                "direction": "left"
+            },
+            "keys": "alt+shift+h"
+        },
+        {
+            "command":
+            {
+                "action": "swapPane",
+                "direction": "right"
+            },
+            "keys": "alt+shift+l"
+        },
+        {
+            "command":
+            {
+                "action": "switchToTab",
                 "index": 0
             },
-            "keys": "alt+shift+1"
+            "keys": "alt+1"
         },
         {
-            "command": 
+            "command":
             {
-                "action": "newTab",
+                "action": "switchToTab",
+                "index": 1
+            },
+            "keys": "alt+2"
+        },
+        {
+            "command":
+            {
+                "action": "switchToTab",
+                "index": 2
+            },
+            "keys": "alt+3"
+        },
+        {
+            "command":
+            {
+                "action": "switchToTab",
                 "index": 3
             },
-            "keys": "alt+shift+4"
+            "keys": "alt+4"
         },
         {
-            "command": 
+            "command":
             {
-                "action": "newTab",
+                "action": "switchToTab",
                 "index": 4
             },
-            "keys": "alt+shift+5"
+            "keys": "alt+5"
         },
         {
-            "command": 
+            "command":
             {
-                "action": "newTab",
+                "action": "switchToTab",
                 "index": 5
             },
-            "keys": "alt+shift+6"
+            "keys": "alt+6"
         },
         {
-            "command": 
+            "command":
             {
-                "action": "newTab",
+                "action": "switchToTab",
                 "index": 6
             },
-            "keys": "alt+shift+7"
+            "keys": "alt+7"
         },
         {
-            "command": 
+            "command":
             {
-                "action": "newTab",
+                "action": "switchToTab",
                 "index": 7
             },
-            "keys": "alt+shift+8"
+            "keys": "alt+8"
+        },
+        {
+            "command":
+            {
+                "action": "switchToTab",
+                "index": 8
+            },
+            "keys": "alt+9"
+        },
+        {
+            "command":
+            {
+                "action": "switchToTab",
+                "index": 9
+            },
+            "keys": "alt+0"
         },
         {
             "command": 
             {
                 "action": "moveFocus",
-                "direction": "previous"
+                "direction": "up"
             },
-            "keys": "ctrl+alt+left"
+            "keys": "alt+k"
         },
         {
             "command": 
@@ -133,6 +165,94 @@
             "keys": "alt+l"
         },
         {
+            "command": 
+            {
+                "action": "moveFocus",
+                "direction": "previous"
+            },
+            "keys": "ctrl+alt+left"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 0
+            },
+            "keys": "alt+shift+1"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 1
+            },
+            "keys": "alt+shift+2"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 2
+            },
+            "keys": "alt+shift+3"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 3
+            },
+            "keys": "alt+shift+4"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 4
+            },
+            "keys": "alt+shift+5"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 5
+            },
+            "keys": "alt+shift+6"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 6
+            },
+            "keys": "alt+shift+7"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 7
+            },
+            "keys": "alt+shift+8"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 8
+            },
+            "keys": "alt+shift+9"
+        },
+        {
+            "command": 
+            {
+                "action": "movePane",
+                "index": 9
+            },
+            "keys": "alt+shift+0"
+        },
+        {
             "command": "togglePaneZoom",
             "keys": "alt+f"
         }
@@ -148,20 +268,17 @@
         "list": 
         [
             {
-                "commandline": "powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
                 "historySize": 20000,
                 "name": "Windows PowerShell"
             },
             {
-                "commandline": "cmd.exe",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
             },
             {
-                "acrylicOpacity": 1.0,
                 "antialiasingMode": "cleartype",
                 "bellStyle": "none",
                 "closeOnExit": "never",
@@ -178,6 +295,7 @@
                 "guid": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
                 "hidden": false,
                 "name": "Debian",
+                "opacity": 100,
                 "padding": "4",
                 "scrollbarState": "hidden",
                 "source": "Windows.Terminal.Wsl",
@@ -191,10 +309,34 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
-                "guid": "{2ece5bfe-50ed-5f3a-ab87-5cd4baafed2b}",
+                "guid": "{eed99b21-cfc8-50de-b106-9fca501f4225}",
                 "hidden": false,
-                "name": "Git Bash",
-                "source": "Git"
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{1caed010-3a1d-55ac-aca5-a58b6b1424c0}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{16208362-94fc-5b1f-a491-5b2624d5ab56}",
+                "hidden": true,
+                "name": "Visual Studio Debug Console",
+                "source": "VSDebugConsole"
+            },
+            {
+                "guid": "{0110db4a-cf7b-5647-9a03-7232d80cd09e}",
+                "hidden": false,
+                "name": "openSUSE-Leap-15-1",
+                "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{41b4e851-1430-504d-adee-219d28725f31}",
+                "hidden": false,
+                "name": "CBL-Mariner-2.0",
+                "source": "Windows.Terminal.Wsl"
             }
         ]
     },
@@ -408,6 +550,7 @@
             "yellow": "#808000"
         }
     ],
+    "startOnUserLogin": true,
     "tabWidthMode": "compact",
     "theme": "dark"
 }
