@@ -311,7 +311,7 @@ slngents()
 
 gcm()
 {
-    gc master "$@" || gc main "$@"
+    gc master "$@" 2>/dev/null || gc main "$@"
 }
 
 gc()
@@ -321,15 +321,15 @@ gc()
         return 1;
     fi
 
-    git branch | grep -E "^\*\s$1$"
+    git branch | grep -E "^\*\s$1$" 2>&1 >/dev/null
     if [ $? -eq 0 ]; then
         echo "already on branch $1"
         return 0;
     fi
 
-    git branch | grep -E "^\s\s$1$"
+    git branch | grep -E "^\s\s$1$" 2>&1 >/dev/null
     if [ $? -ne 0 ]; then
-        echo "$1 is not an existing branch"
+        echo >&2 "$1 is not an existing branch"
         return 1;
     fi
 
@@ -387,10 +387,10 @@ dc()
 
 dcattach()
 {
-    local container_id=$(docker container ls --no-trunc | grep -i "container started" | grep -i $(basename $(pwd)) | awk '{ print $1 }')
+    local container_id=$(docker container ls --no-trunc | grep -i "while sleep 1000" | grep -i $(basename $(pwd)) | awk '{ print $1 }')
 
     if [ -z "$container_id" ]; then
-        echo "no dev container running with name containing $(basename $(pwd))"
+        echo "Failed to find a running devcontainer"
         return 1;
     fi
 
@@ -407,6 +407,27 @@ dcattach()
             | cut -d " " -f 2- \
             | tail -n 1)
         $SHELL'
+}
+
+retag()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: TAG_NAME"
+        return 1;
+    fi
+
+    local tag_exists
+    tag_exists=$(git tag -l | grep "$1")
+
+    if [[ -z "${tag_exists}" ]]; then
+        echo "Failed to find tag $1"
+        return 1;
+    fi
+
+    git push -d origin "$1"
+    git tag -d "$1"
+    git fetch --tags
+    git push origin "$1"
 }
 
 . "$HOME/.cargo/env"
