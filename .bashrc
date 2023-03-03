@@ -427,6 +427,7 @@ retag()
     git push -d origin "$1"
     git tag -d "$1"
     git fetch --tags
+    git tag "$1"
     git push origin "$1"
 }
 
