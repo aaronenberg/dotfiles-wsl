@@ -10,6 +10,7 @@
 .aws
 .azure
 .docker
+.dotnet
 .cargo
 .rustup
 .msrustup

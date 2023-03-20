@@ -1,5 +1,5 @@
 [credential]
-	helper = /mnt/c/Users/aaronenberg/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager-core.exe
+	helper = /mnt/c/Users/aaronenberg/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager.exe
 	useHttpPath = true
 [user]
 	email = aaronenberg@microsoft.com

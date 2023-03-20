@@ -45,8 +45,10 @@ export MYVIMRC="$wh/vimfiles/.vimrc"
 export VIMINIT="source $MYVIMRC"
 
 #export GIT_EXEC_PATH="$(git --exec-path)"
-export WSLENV=$WSLENV:GIT_EXEC_PATH/wp
-. "$HOME/.cargo/env"
+#export WSLENV=$WSLENV:GIT_EXEC_PATH/wp
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
 
 # rust cross-compile ARM64
 export CXX_aarch64_unknown_linux_gnu=aarch64-linux-gnu-g++
