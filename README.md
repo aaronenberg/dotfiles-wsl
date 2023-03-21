@@ -6,7 +6,7 @@ WSL development environment setup
 
 - Clone this repo to the user's home directory
 ```bash
-git init
+git init -b main
 git remote add origin https://github.com/aaronenberg/dotfiles-wsl.git
 git fetch
 git reset origin/main # Required when the versioned files existed in path before "git init" of this repo.
