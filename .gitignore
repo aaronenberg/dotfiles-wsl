@@ -10,6 +10,7 @@
 /.ssh/
 /.vscode-remote-containers/
 /.vscode-server/
+/docs/
 /projects/
 
 /*.swp
