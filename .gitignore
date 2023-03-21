@@ -16,6 +16,7 @@
 /.aws
 /.azure
 /.bash_history
+/.config/dlv/.dbg_history
 /.lesshst
 /.reportbugrc
 /.secrets
