@@ -30,7 +30,8 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-PATH="/mnt/c/Windows/System32/inetsrv:/mnt/c/Users/aaronenberg/workspace/tools:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE:${HOME}/.msrustup/bin:$PATH"
+export GOPATH="$(go env GOPATH)"
+PATH="/mnt/c/Windows/System32/inetsrv:/mnt/c/Users/aaronenberg/workspace/tools:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/MSBuild/Current/Bin:/mnt/c/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE:${HOME}/.msrustup/bin:$GOPATH/bin:$PATH"
 
 test -f ~/.git-completion.bash && . $_ 
 
