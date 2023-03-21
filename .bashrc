@@ -431,4 +431,7 @@ retag()
     git push origin "$1"
 }
 
-. "$HOME/.cargo/env"
+notes()
+{
+    vim "${HOME}"/docs/notes
+}
