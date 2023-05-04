@@ -379,15 +379,25 @@ glfmt()
 dc()
 {
     if [[ "$1" == "attach" ]]; then
-        dcattach
+        dcattach "${@:2}"
+    elif [[ "$1" == "up" ]]; then
+        devcontainer up --workspace-folder . "${@: 2}"
     else
-        command devcontainer "$@"
+        devcontainer "$@"
     fi
 }
 
 dcattach()
 {
-    local container_id=$(docker container ls --no-trunc | grep -i "while sleep 1000" | grep -i $(basename $(pwd)) | awk '{ print $1 }')
+    local project_name
+    if [[ -n "$1" ]]; then
+        project_name="$1"
+    else
+        project_name="$(basename "$(pwd)")"
+    fi
+
+    local container_id
+    container_id=$(docker container ls --no-trunc | grep -i "while sleep 1000" | grep -i "${project_name}" | awk '{ print $1 }')
 
     if [ -z "$container_id" ]; then
         echo "Failed to find a running devcontainer"
@@ -398,7 +408,6 @@ dcattach()
     command docker exec -it \
         -e COLUMNS="`tput cols`" \
         -e LINES="`tput lines`" \
-        -u vscode \
         -w "/workspace" \
         $container_id /usr/bin/env bash -c '
         export REMOTE_CONTAINERS_IPC=$(
@@ -435,3 +444,7 @@ notes()
 {
     vim "${HOME}"/docs/notes
 }
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

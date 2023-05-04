@@ -5,6 +5,9 @@
 /.dotnet/
 /.go/
 /.msrustup/
+/.npm/
+/.nvm/
+/.pyenv/
 /.rpmdb/
 /.rustup/
 /.ssh/
