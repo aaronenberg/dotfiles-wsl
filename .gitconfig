@@ -1,5 +1,10 @@
 [credential]
 	helper = /mnt/c/Users/aaronenberg/AppData/Local/Programs/Git\\ Credential\\ Manager/git-credential-manager.exe
+    # MSAL doesn't support encrypted auth token on headless linux yet, meaning
+    # this fallsback to plain-text storage and always creates a auth pop-up
+	#helper = /usr/local/bin/git-credential-manager
+	#credentialStore = gpg
+[credential "https://dev.azure.com"]
 	useHttpPath = true
 [user]
 	email = aaronenberg@microsoft.com
@@ -13,3 +18,6 @@
 	rebase = false
 [init]
 	defaultBranch = main
+[credential "azrepos:org/msazure"]
+	azureAuthority = https://login.microsoftonline.com/72f988bf-86f1-41af-91ab-2d7cd011db47
+	username = aaronenberg@microsoft.com
