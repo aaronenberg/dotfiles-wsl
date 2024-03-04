@@ -40,6 +40,7 @@ test -f ~/.git-completion.bash && . $_
 
 export wh="/mnt/c/Users/aaronenberg"
 export oc="$wh/projects/OneCert"
+export pkir="$wh/projects/Cauldron"
 export lx="$wh/projects/Identity-LX"
 export ocalt="$wh/projects/OneCert-alt"
 export ts="$wh/projects/Secrets-SDP-TriggerService"

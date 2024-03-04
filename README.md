@@ -1,5 +1,15 @@
 WSL development environment setup
 
+If disabling Exploit Protection, WSL depends on Hyper-V to create VMs and this
+requires **Control Flow Guard (CFG)** protection enabled. 
+
+- Check in *Windows Security -> App & Browser Control -> Exploit Protection
+  Settings*:
+  - Open Program settings
+  - Add program to customize: `C:\Windows\System32\vmcompute.exe`
+  - Under *Control flow guard (CFG)*, check **Override system settings** and turn
+    it **On**
+
 - Install WSL
 
 - Install git with [git credential manager (standalone)](https://github.com/GitCredentialManager/git-credential-manager/releases/latest):

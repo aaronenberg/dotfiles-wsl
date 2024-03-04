@@ -455,6 +455,70 @@ git()
     fi
 }
 
+jaeger_start()
+{
+    docker run -d --rm --name jaeger \
+        -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
+        -p 6831:6831/udp \
+        -p 6832:6832/udp \
+        -p 5778:5778 \
+        -p 16686:16686 \
+        -p 4317:4317 \
+        -p 4318:4318 \
+        -p 14250:14250 \
+        -p 14268:14268 \
+        -p 14269:14269 \
+        -p 9411:9411 \
+        jaegertracing/all-in-one:latest
+}
+
+jaeger_stop()
+{
+    docker stop jaeger
+}
+
+azurite_start()
+{
+    docker run -d --rm --name azurite \
+        -p 10000:10000 \
+        -p 10001:10001 \
+        -p 10002:10002 \
+        mcr.microsoft.com/azure-storage/azurite
+}
+
+azurite_stop()
+{
+    docker stop azurite
+}
+
+stx()
+{
+    if [ -z "$1" ]; then
+        echo "Argument empty: JOB_NAME"
+        return 1;
+    fi
+    if [ -z "$1" ]; then
+        echo "Argument empty: INSTANCE_NAME"
+        return 1;
+    fi
+
+    local CAULDRON_PATH="C:/Users/aaronenberg/projects/Cauldron/src/Synthetics/Microsoft.Cauldron.Synthetics/bin/Debug/net6.0"
+
+    RunSynthetics.exe -d \
+        -r uswest \
+        -a "${CAULDRON_PATH}" \
+        -c "${CAULDRON_PATH}"/syntheticjobs.dev.json \
+        -j "$1" \
+        -i "$2"
+}
+
+cert_info()
+{
+    for f in *.crt; do
+        openssl x509 -inform der -in $f -fingerprint -serial -noout | awk -F= '{ print $2 }' | tr -d : | xargs echo "${f%.*}"
+    done
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
