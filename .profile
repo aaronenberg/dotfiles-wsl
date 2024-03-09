@@ -38,7 +38,11 @@ PATH="/mnt/c/Windows/System32/inetsrv:/mnt/c/Users/aaronenberg/workspace/tools:/
 
 test -f ~/.git-completion.bash && . $_ 
 
-export wh="/mnt/c/Users/aaronenberg"
+if [ -d "/mnt/c/Users/aaronenberg" ]; then
+    export wh="/mnt/c/Users/aaronenberg"
+elif [ -d "/mnt/c/Users/aaron" ]; then
+    export wh="/mnt/c/Users/aaron"
+fi
 export oc="$wh/projects/OneCert"
 export pkir="$wh/projects/Cauldron"
 export lx="$wh/projects/Identity-LX"
