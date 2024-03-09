@@ -12,6 +12,12 @@ requires **Control Flow Guard (CFG)** protection enabled.
 
 - Install WSL
 
+- Set `WSLENV` in Windows user environment variables:
+
+```sh
+USERPROFILE/p
+```
+
 - Install git with [git credential manager (standalone)](https://github.com/GitCredentialManager/git-credential-manager/releases/latest):
 
 - Clone this repo to the user's home directory

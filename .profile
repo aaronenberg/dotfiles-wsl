@@ -38,11 +38,7 @@ PATH="/mnt/c/Windows/System32/inetsrv:/mnt/c/Users/aaronenberg/workspace/tools:/
 
 test -f ~/.git-completion.bash && . $_ 
 
-if [ -d "/mnt/c/Users/aaronenberg" ]; then
-    export wh="/mnt/c/Users/aaronenberg"
-elif [ -d "/mnt/c/Users/aaron" ]; then
-    export wh="/mnt/c/Users/aaron"
-fi
+export wh="$USERPROFILE"
 export oc="$wh/projects/OneCert"
 export pkir="$wh/projects/Cauldron"
 export lx="$wh/projects/Identity-LX"
@@ -67,3 +63,4 @@ if [ -d "$HOME/.pyenv" ]; then
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
 fi
+
