@@ -445,6 +445,11 @@ notes()
     vim "${HOME}"/docs/notes
 }
 
+journ()
+{
+    vim "${HOME}"/docs/journal
+}
+
 git()
 {
     WORK_DIR=$(pwd -P)
@@ -514,8 +519,20 @@ stx()
 
 cert_info()
 {
-    for f in *.crt; do
-        openssl x509 -inform der -in $f -fingerprint -serial -noout | awk -F= '{ print $2 }' | tr -d : | xargs echo "${f%.*}"
+    for crt in *.crt
+    do
+        openssl x509 -inform der -in "${crt}" -fingerprint -serial -noout | awk -F= '{ print $2 }' | tr -d : | xargs echo "${crt%.*}"
+    done
+}
+
+map_cert_opreq()
+{
+    for crt in *.crt
+    do
+        if ! grep "${crt}" operationrequests*.json
+        then
+            echo help "${crt}";
+        fi
     done
 }
 
