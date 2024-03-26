@@ -460,7 +460,7 @@ git()
     fi
 }
 
-jaeger_start()
+jaeger_run()
 {
     docker run -d --rm --name jaeger \
         -e COLLECTOR_ZIPKIN_HOST_PORT=:9411 \
@@ -482,7 +482,7 @@ jaeger_stop()
     docker stop jaeger
 }
 
-azurite_start()
+azurite_run()
 {
     docker run -d --rm --name azurite \
         -p 10000:10000 \
@@ -494,6 +494,20 @@ azurite_start()
 azurite_stop()
 {
     docker stop azurite
+}
+
+cosmos_run()
+{
+    docker run -d --rm --name cosmos \
+        -e AZURE_COSMOS_EMULATOR_IP_ADDRESS_OVERRIDE="127.0.0.1" \
+        -p 8081:8081 \
+        -p 10250-10255:10250-10255 \
+        mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest
+}
+
+cosmos_stop()
+{
+    docker stop cosmos
 }
 
 stx()
@@ -534,6 +548,26 @@ map_cert_opreq()
             echo help "${crt}";
         fi
     done
+}
+
+clone_gold()
+{
+
+    local dir="Azure-Gold-Config_sparse"
+    rm -rf "${dir}"
+    git clone --no-checkout --filter=tree:0 --depth=1 https://azureconfig@dev.azure.com/azureconfig/Gold/_git/Azure-Gold-Config "${dir}"
+    pushd "${dir}"
+    git sparse-checkout set --no-cone '/*' '!/*/' .config .corext build guardian src tools autopilotservice/Global/VirtualEnvironments/CEG_AzureIdentity/AzurePKI_PPE autopilotservice/Global/VirtualEnvironments/CEG_AzureIdentity/AzurePKI_PROD
+    git checkout
+    if [ -n "$1" ]; then
+        git checkout -b "$1"
+    fi
+    popd
+}
+
+apsign()
+{
+    apsigntool -a -g -d ame
 }
 
 export NVM_DIR="$HOME/.nvm"
