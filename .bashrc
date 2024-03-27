@@ -550,14 +550,22 @@ map_cert_opreq()
     done
 }
 
+clone_gold_pe()
+{
+    clone_gold "$1" "1"
+}
+
 clone_gold()
 {
-
     local dir="Azure-Gold-Config_sparse"
     rm -rf "${dir}"
     git clone --no-checkout --filter=tree:0 --depth=1 https://azureconfig@dev.azure.com/azureconfig/Gold/_git/Azure-Gold-Config "${dir}"
     pushd "${dir}"
-    git sparse-checkout set --no-cone '/*' '!/*/' .config .corext build guardian src tools autopilotservice/Global/VirtualEnvironments/CEG_AzureIdentity/AzurePKI_PPE autopilotservice/Global/VirtualEnvironments/CEG_AzureIdentity/AzurePKI_PROD
+    local pe_pattern=''
+    if [ -n "$2" ]; then
+        local pe_pattern='autopilotservice/*/AzurePKI*'
+    fi
+    git sparse-checkout set --no-cone '/*' '!/*/' .config .corext build guardian src tools autopilotservice/Global/VirtualEnvironments/CEG_AzureIdentity/AzurePKI_PPE autopilotservice/Global/VirtualEnvironments/CEG_AzureIdentity/AzurePKI_PROD "${pe_pattern}"
     git checkout
     if [ -n "$1" ]; then
         git checkout -b "$1"
