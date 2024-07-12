@@ -14,11 +14,18 @@ requires **Control Flow Guard (CFG)** protection enabled.
 
 - Install [WSL](https://learn.microsoft.com/en-us/windows/wsl/install)
 
+    ```sh
+    wsl --update
+    wsl --install Debian
+    ```
+
 - Set `WSLENV` in Windows user environment variables:
 
     ```sh
     USERPROFILE/p
     ```
+
+- Install [git credential manager (standalone)](https://github.com/GitCredentialManager/git-credential-manager/releases/latest):
 
 ### X11 window behavior
 
@@ -34,7 +41,11 @@ requires **Control Flow Guard (CFG)** protection enabled.
 
 ## WSL Setup
 
-- Install [git credential manager (standalone)](https://github.com/GitCredentialManager/git-credential-manager/releases/latest):
+- Install git
+
+    ```sh
+    apt-get update && apt-get install git
+    ```
 
 - Clone this repo to the user's home directory
 
@@ -48,6 +59,8 @@ requires **Control Flow Guard (CFG)** protection enabled.
     ```
 
 - Copy [.dotfiles/win](.dotfiles/win) contents to Windows filesystem
+
+- Copy [.dotfiles/wsl](.dotfiles/wsl) contents to WSL filesystem
 
 - Update submodules
 
