@@ -26,6 +26,7 @@
 /.vcpkg/
 /docs/
 /projects/
+/tmp/
 
 /*.swp
 /.aws
@@ -36,6 +37,7 @@
 /.reportbugrc
 /.secrets
 /.selected_editor
+/.sudo_as_admin_successful
 /.vim/.netrwhist
 /.viminfo
 /temp
