@@ -44,17 +44,6 @@ echo 'export WSLENV=$WSLENV:GIT_EXEC_PATH/wp' >> ~/.bashrc
 git submodule update --init --recursive
 ```
 
-- If you get an error like:
-    error: chmod on .git/config.lock failed: Operation not permitted
-    fatal: could not set 'core.filemode' to 'false'
-    
-    - edit /etc/wsl.conf. Add the following:
-    ```
-    [automount]
-    options = "metadata"
-    ```
-
-
 X11 window behavior
 - Enable focus window on hover
     - Open Control panel => ease of access => Change how the mouse works => activate a window by hovering over it
