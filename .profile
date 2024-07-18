@@ -64,3 +64,7 @@ if [ -d "$HOME/.pyenv" ]; then
     eval "$(pyenv init -)"
 fi
 
+
+if [ -f "$HOME/.rye/env" ]; then
+    . "$HOME/.rye/env"
+fi

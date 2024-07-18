@@ -445,9 +445,9 @@ notes()
     vim "${HOME}"/docs/notes
 }
 
-journ()
+todo()
 {
-    vim "${HOME}"/docs/journal
+    vim "${HOME}"/docs/todo
 }
 
 git()

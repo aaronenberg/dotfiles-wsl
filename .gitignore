@@ -20,6 +20,7 @@
 /.python_history
 /.rpmdb/
 /.rustup/
+/.rye/
 /.ssh/
 /.vscode-remote-containers/
 /.vscode-server/
