@@ -442,12 +442,12 @@ retag()
 
 notes()
 {
-    vim "${HOME}"/docs/notes
+    vim "${HOME}"/docs/notes.md
 }
 
 todo()
 {
-    vim "${HOME}"/docs/todo
+    vim "${HOME}"/docs/todo.md
 }
 
 git()

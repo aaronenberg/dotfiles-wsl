@@ -58,6 +58,8 @@ export CXX_aarch64_unknown_linux_gnu=aarch64-linux-gnu-g++
 export CC_aarch64_unknown_linux_gnu=aarch64-linux-gnu-gcc
 export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc
 
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
 if [ -d "$HOME/.pyenv" ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
