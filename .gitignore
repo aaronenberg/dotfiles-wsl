@@ -10,10 +10,12 @@
 /.gnupg/
 /.go/
 /.local/.IdentityService/
+/.local/share/
 /.mono/
 /.msrustup/
 /.net/
 /.npm/
+/.nuget/
 /.nvm/
 /.password-store/
 /.pyenv/
@@ -41,4 +43,5 @@
 /.sudo_as_admin_successful
 /.vim/.netrwhist
 /.viminfo
+/.wget-hsts
 /temp
