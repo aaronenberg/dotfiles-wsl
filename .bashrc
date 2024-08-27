@@ -450,6 +450,11 @@ todo()
     vim "${HOME}"/todo.md
 }
 
+jnl()
+{
+    vim "${HOME}"/journal.md
+}
+
 git()
 {
     WORK_DIR=$(pwd -P)
