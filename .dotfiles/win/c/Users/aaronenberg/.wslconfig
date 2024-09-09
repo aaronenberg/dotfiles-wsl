@@ -2,6 +2,5 @@
 memory=8GB
 swap=0
 networkingMode=mirrored
-
-[automount]
-options = "metadata"
+# disabled because this broke access to docker bridge network from windows host. see https://github.com/microsoft/WSL/issues/10494
+#networkingMode=mirrored
