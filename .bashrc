@@ -465,6 +465,26 @@ git()
     fi
 }
 
+dotnet()
+{
+    WORK_DIR=$(pwd -P)
+    if [[ "${WORK_DIR}" == /mnt/c/* ]]; then
+        "/mnt/c/Program Files/dotnet/dotnet.exe" "$@"
+    else
+        command dotnet "$@"
+    fi
+}
+
+cargo()
+{
+    WORK_DIR=$(pwd -P)
+    if [[ "${WORK_DIR}" == /mnt/c/* ]]; then
+        "/mnt/c/Users/aaronenberg/.cargo/bin/cargo.exe" "$@"
+    else
+        command cargo "$@"
+    fi
+}
+
 jaeger_run()
 {
     docker run -d --rm --name jaeger \
@@ -526,7 +546,7 @@ stx()
         return 1;
     fi
 
-    local CAULDRON_PATH="C:/Users/aaronenberg/projects/Cauldron/src/Synthetics/Microsoft.Cauldron.Synthetics/bin/Debug/net6.0"
+    local CAULDRON_PATH="C:/Users/aaronenberg/projects/Cauldron/src/Synthetics/Microsoft.Cauldron.Synthetics/bin/Debug/net8.0/win-x64"
 
     RunSynthetics.exe -d \
         -r uswest \
@@ -581,6 +601,20 @@ clone_gold()
 apsign()
 {
     apsigntool -a -g -d ame
+}
+
+cat()
+{
+    if [[ -n "$1" ]]; then
+        ext="${1##*.}"
+        if [[ "${ext}" == "md" ]]; then
+            glow "${@}"
+        else
+            command cat ${@}
+        fi
+    else
+        command cat ${@}
+    fi
 }
 
 export NVM_DIR="$HOME/.nvm"

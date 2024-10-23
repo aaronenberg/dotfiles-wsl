@@ -23,6 +23,7 @@
 /.rpmdb/
 /.rustup/
 /.rye/
+/.ServiceHub/
 /.ssh/
 /.vscode-remote-containers/
 /.vscode-server/
