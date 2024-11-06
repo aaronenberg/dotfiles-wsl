@@ -17,7 +17,7 @@ set wrap
 set linebreak
 set nolist
 set numberwidth=1
-set textwidth=80
+set textwidth=100
 set fo-=t
 set nojoinspaces
 
