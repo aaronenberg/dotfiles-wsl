@@ -154,7 +154,10 @@ occ()
 {
     pushd .
     cd $oc
+    stopoc
     nc SharedConfiguration/appsettings.dev.json
+    nr OneCert.sln
+    startoc
     popd
 }
 
@@ -195,7 +198,7 @@ nr()
 
     pushd .
     cd "$(dirname "$(realpath "$1")")"
-    nuget restore "$(basename $1)"
+    msbuild "$(basename $1)" -t:restore
     popd
 }
 
@@ -209,7 +212,7 @@ nb()
 
     pushd .
     cd "$(dirname "$(realpath "$1")")"
-    msbuild "$(basename $1)"
+    msbuild "$(basename $1)" -t:build
     popd
 }
 
@@ -264,19 +267,36 @@ nrb()
     pushd .
     cd "$(dirname "$(realpath "$1")")"
 
+    stopoc
     nc "$2"
     [ $? -ne 0 ] && return 1
-
-    nuget restore "$(basename $1)"
+    msbuild "$(basename $1)" -t:restore
+    startoc
     tasklist /fi "IMAGENAME eq devenv.exe" | grep devenv
     [ $? -ne 0 ] && nohup devenv.exe /nosplash "$(basename $1)" >/dev/null 2>&1 &
-    msbuild "$(basename $1)"
+    msbuild "$(basename $1)" -t:build
     popd
 }
 
 restartoc()
 {
     appcmd recycle apppool /apppool.name:"onecert-dev"
+}
+
+stopoc()
+{
+    appcmd list apppool /name:"onecert-dev" /state:started
+    if [ $? -eq 0 ]; then
+        appcmd stop apppool /apppool.name:"onecert-dev"
+    fi
+}
+
+startoc()
+{
+    appcmd list apppool /name:"onecert-dev" /state:stopped
+    if [ $? -eq 0 ]; then
+        appcmd start apppool /apppool.name:"onecert-dev"
+    fi
 }
 
 # Check a git repo for any untracked files
@@ -513,7 +533,13 @@ azurite_run()
         -p 10000:10000 \
         -p 10001:10001 \
         -p 10002:10002 \
-        mcr.microsoft.com/azure-storage/azurite
+        mcr.microsoft.com/azure-storage/azurite \
+        azurite \
+        -d /data/debug.log \
+        -l /data \
+        --blobHost 0.0.0.0 \
+        --queueHost 0.0.0.0 \
+        --tableHost 0.0.0.0
 }
 
 azurite_stop()
@@ -558,9 +584,13 @@ stx()
 
 cert_info()
 {
-    for crt in *.crt
+    for crt in *.cer
     do
-        openssl x509 -inform der -in "${crt}" -fingerprint -serial -noout | awk -F= '{ print $2 }' | tr -d : | xargs echo "${crt%.*}"
+        output=$(openssl x509 -inform der -in "${crt}" -fingerprint -serial -enddate -noout 2>/dev/null)
+        if [[ $? -ne 0 ]]; then
+            output=$(openssl x509 -inform pem -in "${crt}" -fingerprint -serial -enddate -noout)
+        fi
+         echo "${output}" | awk -F= '{ print $2 }' | tr -d : | xargs echo "${crt%.*}"
     done
 }
 
@@ -615,6 +645,11 @@ cat()
     else
         command cat ${@}
     fi
+}
+
+docfx_pkir()
+{
+    docfx build ~/projects/PKI-R-LivesiteResources/doc/docfx.json --serve
 }
 
 export NVM_DIR="$HOME/.nvm"
