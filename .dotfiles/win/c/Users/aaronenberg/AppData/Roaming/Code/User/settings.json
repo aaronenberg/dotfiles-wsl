@@ -1,0 +1,34 @@
+{
+    "workbench.startupEditor": "none",
+    "redhat.telemetry.enabled": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "diffEditor.hideUnchangedRegions.enabled": true,
+    "markdown.styles": [
+        "https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+    ],
+    "security.allowedUNCHosts": [
+        "wsl.localhost"
+    ],
+    "vim.vimrc.enable": true,
+    "git.openRepositoryInParentFolders": "never",
+    "rust-analyzer.check.features": null,
+    "remote.SSH.localServerDownload": "auto",
+    "remote.SSH.remotePlatform": {
+        "rcvagent_dev": "linux"
+    },
+    "wavespace.defaultExtensions": {
+        "rcvagent_dev": [
+            "ms-vscode.cpptools",
+            "rust-lang.rust-analyzer",
+            "ms-vscode.live-server"
+        ]
+    },
+    "[json]": {
+        "editor.indentSize": 4,
+        "editor.quickSuggestions": {
+            "strings": true
+        },
+        "editor.suggest.insertMode": "replace"
+    },
+    "terminal.integrated.defaultProfile.windows": "Debian (WSL)"
+}
