@@ -652,6 +652,65 @@ docfx_pkir()
     docfx build ~/projects/PKI-R-LivesiteResources/doc/docfx.json --serve
 }
 
+runelite_sync()
+{
+    DRYRUN=0
+    if [[ -n "$1" ]]; then
+        DRYRUN=1
+    fi
+    RUNELITE_DIR="$wh/.runelite/profiles2"
+    SOURCE_PROFILE=aaronenberg
+    DEST_PROFILE=steamdeck
+    EXTERNAL_PLUGINS_KEY='^runelite.externalPlugins'
+    # keep destination settings, which overrides existing source settings
+    KEEP_DEST_PATTERN='^\(runelite.\|hd.\|stretchedmode.\|camerasmoothing.\)'
+    # ignore settings from source
+    IGNORED_SOURCE_PATTERN='^\(resourcepacks.\|pinggraph.\)'
+    # ignore plugins from source
+    IGNORED_SOURCE_PLUGINS='s/resource-packs(,)?|ping-grapher(,)?//g'
+
+    SOURCE_PROFILE_PATH="${RUNELITE_DIR}/${SOURCE_PROFILE}-*.properties"
+    if [[ -z "${SOURCE_PROFILE_PATH}" ]]; then
+        echo "no source profile found"
+        return 1;
+    fi
+    tmp=($SOURCE_PROFILE_PATH)
+    SOURCE_PROFILE_PATH=${tmp[0]}
+
+    DEST_PROFILE_PATH="${RUNELITE_DIR}/${DEST_PROFILE}-*.properties"
+    if [[ -z "${DEST_PROFILE_PATH}" ]]; then
+        echo "no destination profile found"
+        return 1;
+    fi
+    tmp=($DEST_PROFILE_PATH)
+    DEST_PROFILE_PATH=${tmp[0]}
+
+    dest_last_modified=$(date -r "${DEST_PROFILE_PATH}")
+    dest_last_modified_seconds=$(date +%s --date "${dest_last_modified}")
+    # 5 minute window before profile expires
+    not_before=$(($(date +%s) - 300))
+    if [[ ${dest_last_modified_seconds} -lt ${not_before} ]]; then
+        echo "destination profile is too old. Restart Runelite and activate the profile to sync it from the cloud."
+        return 1;
+    fi
+
+    TMP_PROFILE_1=$(mktemp)
+    TMP_PROFILE_2=$(mktemp)
+
+    grep ${KEEP_DEST_PATTERN} "${DEST_PROFILE_PATH}" > ${TMP_PROFILE_1}
+    grep -v ${KEEP_DEST_PATTERN} "${SOURCE_PROFILE_PATH}" | grep -v ${IGNORED_SOURCE_PATTERN} >> ${TMP_PROFILE_1}
+    grep -v ${EXTERNAL_PLUGINS_KEY} ${TMP_PROFILE_1} > ${TMP_PROFILE_2}
+    grep ${EXTERNAL_PLUGINS_KEY} ${SOURCE_PROFILE_PATH} | sed -E ${IGNORED_SOURCE_PLUGINS} >> ${TMP_PROFILE_2}
+    if [[ ${DRYRUN} -gt 0 ]]; then
+        sort "${TMP_PROFILE_2}"
+        echo "Completed dry-run of profile sync."
+    else
+        sort "${TMP_PROFILE_2}" -o "${DEST_PROFILE_PATH}" 
+        rm -f "${TMP_PROFILE_1}" "${TMP_PROFILE_2}"
+        echo "Completed local profile sync. Re-enable cloud sync on destination profile and restart Runelite."
+    fi
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
