@@ -573,11 +573,12 @@ stx()
     fi
 
     local CAULDRON_PATH="C:/Users/aaronenberg/projects/Cauldron/src/Synthetics/Microsoft.Cauldron.Synthetics/bin/Debug/net8.0/win-x64"
+    local JOB_CONFIG="C:/Users/aaronenberg/projects/Cauldron/src/Synthetics/Microsoft.Cauldron.Synthetics/syntheticjobs.dev.json"
 
     RunSynthetics.exe -d \
         -r uswest \
         -a "${CAULDRON_PATH}" \
-        -c "${CAULDRON_PATH}"/syntheticjobs.dev.json \
+        -c "${JOB_CONFIG}" \
         -j "$1" \
         -i "$2"
 }
@@ -709,6 +710,12 @@ runelite_sync()
         rm -f "${TMP_PROFILE_1}" "${TMP_PROFILE_2}"
         echo "Completed local profile sync. Re-enable cloud sync on destination profile and restart Runelite."
     fi
+
+}
+
+prettyjson()
+{
+    python -m json.tool
 }
 
 export NVM_DIR="$HOME/.nvm"
