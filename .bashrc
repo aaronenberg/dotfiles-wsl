@@ -216,35 +216,6 @@ nb()
     popd
 }
 
-tsrb()
-{
-    if [ -z "$1" ]; then
-        echo "Argument empty: PATH_TO_REPO"
-        return 1;
-    fi
-
-    pushd .
-    cd $(realpath "$1")
-    nc && \
-    tsb "$1"
-    popd
-}
-
-tsb()
-{
-    if [ -z "$1" ]; then
-        echo "Argument empty: PATH_TO_REPO"
-        return 1;
-    fi
-
-    pushd .
-    cd $(realpath "$1")
-    powershell -command 'msbuild -t:slngen -p:"SlnGenLaunchVisualStudio=false" -p:"Platform=x64"' && \
-    # build is failing when run in bash
-    powershell -command 'msbuild -p:"Platform=x64"'
-    popd
-}
-
 # Rebuild OneCert Solution
 ocrb()
 {
@@ -575,12 +546,13 @@ stx()
     local CAULDRON_PATH="C:/Users/aaronenberg/projects/Cauldron/src/Synthetics/Microsoft.Cauldron.Synthetics/bin/Debug/net8.0/win-x64"
     local JOB_CONFIG="C:/Users/aaronenberg/projects/Cauldron/src/Synthetics/Microsoft.Cauldron.Synthetics/syntheticjobs.dev.json"
 
-    RunSynthetics.exe -d \
+    RunSynthetics.exe \
         -r uswest \
         -a "${CAULDRON_PATH}" \
         -c "${JOB_CONFIG}" \
         -j "$1" \
-        -i "$2"
+        -i "$2" \
+        "${@}"
 }
 
 cert_info()
@@ -639,13 +611,18 @@ cat()
     if [[ -n "$1" ]]; then
         ext="${1##*.}"
         if [[ "${ext}" == "md" ]]; then
-            glow "${@}"
+            bat -p --paging=never "${@}"
         else
-            command cat ${@}
+            bat -p --paging=never "${@}"
         fi
     else
-        command cat ${@}
+        bat -p --paging=never "${@}"
     fi
+}
+
+less()
+{
+    bat "${@}"
 }
 
 docfx_pkir()
@@ -716,6 +693,11 @@ runelite_sync()
 prettyjson()
 {
     python -m json.tool
+}
+
+fzf()
+{
+    ~/.local/bin/rgfzf
 }
 
 export NVM_DIR="$HOME/.nvm"

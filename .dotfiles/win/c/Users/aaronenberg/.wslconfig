@@ -1,6 +1,7 @@
 [wsl2]
 memory=8GB
 swap=0
-networkingMode=mirrored
-# disabled because this broke access to docker bridge network from windows host. see https://github.com/microsoft/WSL/issues/10494
+# - disabled because this broke access to docker bridge network from windows host. see https://github.com/microsoft/WSL/issues/10494
+# - re-enabled because resolved on 27.3.0?
+# - disabled because broken again on WSL version: 2.3.17.0?
 #networkingMode=mirrored
