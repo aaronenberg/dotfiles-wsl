@@ -620,11 +620,6 @@ cat()
     fi
 }
 
-less()
-{
-    bat "${@}"
-}
-
 docfx_pkir()
 {
     docfx build ~/projects/PKI-R-LivesiteResources/doc/docfx.json --serve
