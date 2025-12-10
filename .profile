@@ -45,6 +45,7 @@ export lx="$wh/projects/Identity-LX"
 export ocalt="$wh/projects/OneCert-alt"
 export ts="$wh/projects/Secrets-SDP-TriggerService"
 export tss="$ts/src/service/PilotFish/TriggerService/TriggerService.Synthetics"
+export rcv="$wh/projects/security-RCV-Agent-Linux"
 
 export MYVIMRC="$wh/vimfiles/.vimrc"
 export VIMINIT="source $MYVIMRC"

@@ -4,6 +4,8 @@
 /.azure-functions-core-tools/
 /.cache/
 /.cargo/
+/.config/configstore/
+/.copilot/
 /.docker/
 /.dotnet/
 /.ev2/

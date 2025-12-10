@@ -456,6 +456,20 @@ git()
     fi
 }
 
+code()
+{
+    if [[ -n "${1}" ]]; then
+        FOLDER_TO_OPEN=$(realpath "${1}")
+        if [[ "${FOLDER_TO_OPEN}" == /mnt/c/* ]]; then
+            cmd /c code "${1}"
+        else
+            command code "${@}"
+        fi
+    else
+        command code "${@}"
+    fi
+}
+
 dotnet()
 {
     WORK_DIR=$(pwd -P)
@@ -693,6 +707,21 @@ prettyjson()
 fzf()
 {
     ~/.local/bin/rgfzf
+}
+
+pkir_msb_clean()
+{
+    msbuild.exe "dirs.proj" -t:"Clean" -t:"Restore" -p:platform="x64" -p:configuration="release" -m:4 -nologo -nr:false -p:CI=true -fl -flp:"logfile=dirs.proj-clean.log;verbosity=normal" -flp1:"Verbosity=d;LogFile=msbuild_x64_release.log;Encoding=UTF-8" -flp2:"logfile=msbuild_x64_release.err;errorsonly"
+}
+
+pkir_msb()
+{
+    msbuild.exe "dirs.proj" -p:platform="x64" -p:configuration="release" -m:4 -nologo -nr:false -p:CI=true -fl -flp:"logfile=dirs.proj-clean.log;verbosity=normal" -flp1:"Verbosity=d;LogFile=msbuild_x64_release.log;Encoding=UTF-8" -flp2:"logfile=msbuild_x64_release.err;errorsonly"
+}
+
+slngen()
+{
+   command slngen --launch=false "${@}"
 }
 
 export NVM_DIR="$HOME/.nvm"
