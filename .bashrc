@@ -636,7 +636,7 @@ cat()
 
 docfx_pkir()
 {
-    docfx build ~/projects/PKI-R-LivesiteResources/doc/docfx.json --serve
+    docfx build ./docfx.json --serve
 }
 
 runelite_sync()
